@@ -20,40 +20,32 @@ public class Waypoints : MonoBehaviour
     public Waypoint[] FindPath(Vector2 start, string waypointID)
     {
         Waypoint nearestWaypoint = GetNearestPoint(start);
-        List<List<Waypoint>> paths = new();
-        paths.Add(new() { nearestWaypoint });
+        List<List<Waypoint>> paths = CreatePaths(nearestWaypoint, waypointID);
+        var pathsThatEndOnWaypointID = paths.Select(x=>x).Where(x=>x.Last().name == waypointID);
 
-        List<List<Waypoint>> test = CreatePaths(nearestWaypoint, waypointID);
-        foreach (var a in test)
+        foreach (var path in paths)
         {
-            string d = "";
-            foreach (var b in a)
-            {
-                d += $"{ b.name } ";
-            }
-
-            Debug.Log(d);
+            DisplayPath(path);
         }
+
+        foreach (var path in pathsThatEndOnWaypointID)
+        {
+            DisplayPath(path);
+        }
+    
 
         return null;
     }
 
-    int test = 0;
-    private List<List<Waypoint>> CreatePaths(Waypoint startWaypoint, string waypointId, Waypoint previouseWay = null, List<Waypoint> previousPath = null)
+    private List<List<Waypoint>> CreatePaths(Waypoint startWaypoint, string waypointID, Waypoint previouseWay = null, List<Waypoint> previousPath = null)
     {
-        test++;
         List<List<Waypoint>> paths = new();
-
-        List<Waypoint> path = new();
+        List<Waypoint> path = previousPath != null ? new(previousPath) : new() { startWaypoint };
         
 
         foreach (var con in startWaypoint.Connections)
         {
-            List<Waypoint> p = new();
-            if (previousPath != null)
-            {
-                p = previousPath;
-            }
+            List<Waypoint> p = new(path);
 
             if (previouseWay != null)
             {
@@ -61,26 +53,23 @@ public class Waypoints : MonoBehaviour
                     continue;
             }
 
- 
-            
-            if (p.Any(x => x.name == con.name))
-            {
-              
-                continue;
-                
-            }
-            
 
+            if (p.Any(x => x.name == con.name))
+                continue;
+           
 
             p.Add(con);
-            DisplayPath(p,$"{test}. Current Path: ");
-            if (previousPath != null)
+            if (con.Connections.Select(x=>x).Where(x=>p.Any(c=>c.name == x.name)).ToList().Count >= con.Connections.Count || con.name == waypointID)
             {
-                DisplayPath(previousPath, $"{test}. Previous Path: ");
+                paths.Add(new(p));
+                continue;
             }
-            paths = CreatePaths(con, waypointId, startWaypoint, p);
-        }
 
+            var subPaths = CreatePaths(con, waypointID, startWaypoint, p);
+            paths.AddRange(subPaths);        
+        }
+        
+        
 
         return paths;
     }
