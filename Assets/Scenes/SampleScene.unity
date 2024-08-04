@@ -199,7 +199,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b615b57c7822de45abcd93d10697cd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _testTransform: {fileID: 670299331}
 --- !u!4 &449188457
 Transform:
   m_ObjectHideFlags: 0
@@ -473,11 +472,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &670299331 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8509715690487580196, guid: b1245515afc026c4ab3237e35d359367, type: 3}
-  m_PrefabInstance: {fileID: 8582655634610806978}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &676682314 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7017041496581438735, guid: 69b8ccece175bac4487d883001909588, type: 3}
@@ -1632,7 +1626,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b615b57c7822de45abcd93d10697cd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _testTransform: {fileID: 670299331}
 --- !u!114 &1962550254 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6208373026820715993, guid: 69b8ccece175bac4487d883001909588, type: 3}
@@ -1873,6 +1866,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2493775686782637584, guid: b1245515afc026c4ab3237e35d359367, type: 3}
+      propertyPath: _waypoints
+      value: 
+      objectReference: {fileID: 1879733523}
+    - target: {fileID: 2493775686782637584, guid: b1245515afc026c4ab3237e35d359367, type: 3}
       propertyPath: _testWaypoint
       value: 
       objectReference: {fileID: 1772951166}
@@ -1931,6 +1928,6 @@ SceneRoots:
   m_Roots:
   - {fileID: 519420032}
   - {fileID: 619394802}
-  - {fileID: 8582655634610806978}
   - {fileID: 1879733522}
   - {fileID: 449188457}
+  - {fileID: 8582655634610806978}

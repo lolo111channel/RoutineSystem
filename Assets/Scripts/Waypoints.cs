@@ -6,35 +6,35 @@ using UnityEngine;
 
 public class Waypoints : MonoBehaviour
 {
-    private Waypoint[] _waypoints;
-    [SerializeField] private Transform _testTransform;
-
-    private void Start()
-    {
-        _waypoints = GetComponentsInChildren<Waypoint>();
-
-        FindPath(_testTransform.position, "Way09");
-    }
-
+    private Waypoint[] _waypoints = new Waypoint[0];
 
     public Waypoint[] FindPath(Vector2 start, string waypointID)
     {
+        if (_waypoints.Length <= 0)
+            _waypoints = GetComponentsInChildren<Waypoint>();
+
         Waypoint nearestWaypoint = GetNearestPoint(start);
         List<List<Waypoint>> paths = CreatePaths(nearestWaypoint, waypointID);
-        var pathsThatEndOnWaypointID = paths.Select(x=>x).Where(x=>x.Last().name == waypointID);
+        List<List<Waypoint>> pathsThatEndOnWaypointID = paths.Select(x=>x).Where(x=>x.Last().name == waypointID).ToList();
 
-        foreach (var path in paths)
+        Dictionary<int, float> pathsDistance = new();
+
+        for (int i = 0; i < pathsThatEndOnWaypointID.Count; i++)
         {
-            DisplayPath(path);
+            pathsDistance.Add(i, 0.0f);
+            for (int j = 0; j < pathsThatEndOnWaypointID[i].Count - 1; ++j)
+            {
+                Waypoint way1 = paths[i][j];
+                Waypoint way2 = paths[i][j + 1];
+                float distance = Vector2.Distance(way1.transform.position, way2.transform.position);
+
+                pathsDistance[i] += distance;
+            }
         }
 
-        foreach (var path in pathsThatEndOnWaypointID)
-        {
-            DisplayPath(path);
-        }
+        List<Waypoint> nearestPath = pathsThatEndOnWaypointID[pathsDistance.Aggregate((x,y) => x.Value < y.Value ? x : y).Key];
     
-
-        return null;
+        return nearestPath.ToArray();
     }
 
     private List<List<Waypoint>> CreatePaths(Waypoint startWaypoint, string waypointID, Waypoint previouseWay = null, List<Waypoint> previousPath = null)
