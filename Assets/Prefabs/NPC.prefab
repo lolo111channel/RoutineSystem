@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8509715690487580196}
   - component: {fileID: 2311551464277191082}
   - component: {fileID: 2493775686782637584}
+  - component: {fileID: 6499294798187872812}
   m_Layer: 0
   m_Name: NPC
   m_TagString: Untagged
@@ -97,5 +98,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 104fc5f4d3d6d214e8cba354350cc9f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _testWaypoint: {fileID: 0}
+  _waypoints: {fileID: 0}
   _movementSpeed: 5
+--- !u!114 &6499294798187872812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2832780655540507691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3078ea275ac5004bb748686b280b3c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _timeManager: {fileID: 0}

@@ -22,7 +22,7 @@ public class Waypoints : MonoBehaviour
         for (int i = 0; i < pathsThatEndOnWaypointID.Count; i++)
         {
             pathsDistance.Add(i, 0.0f);
-            for (int j = 0; j < pathsThatEndOnWaypointID[i].Count - 1; ++j)
+            for (int j = 0; j < pathsThatEndOnWaypointID[i].Count - 2; ++j)
             {
                 Waypoint way1 = paths[i][j];
                 Waypoint way2 = paths[i][j + 1];
