@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2311551464277191082}
   - component: {fileID: 2493775686782637584}
   - component: {fileID: 6499294798187872812}
+  - component: {fileID: 4644704818451645060}
   m_Layer: 0
   m_Name: NPC
   m_TagString: Untagged
@@ -100,6 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _waypoints: {fileID: 0}
   _movementSpeed: 5
+  IsArrived: 1
 --- !u!114 &6499294798187872812
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -113,3 +115,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _timeManager: {fileID: 0}
+  _routines: []
+--- !u!95 &4644704818451645060
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2832780655540507691}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f46218f8adb808a46b4b418060ab87ea, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

@@ -8,8 +8,9 @@ public class Waypoints : MonoBehaviour
 {
     private Waypoint[] _waypoints = new Waypoint[0];
 
-    public Waypoint[] FindPath(Vector2 start, string waypointID)
+    public Waypoint[] FindPath(Vector2 start, string waypointID, string actionName = "")
     {
+
         if (_waypoints.Length <= 0)
             _waypoints = GetComponentsInChildren<Waypoint>();
 
@@ -22,18 +23,39 @@ public class Waypoints : MonoBehaviour
         for (int i = 0; i < pathsThatEndOnWaypointID.Count; i++)
         {
             pathsDistance.Add(i, 0.0f);
-            for (int j = 0; j < pathsThatEndOnWaypointID[i].Count - 2; ++j)
+            if (pathsThatEndOnWaypointID[i].Count - 1 < 1)
             {
-                Waypoint way1 = paths[i][j];
-                Waypoint way2 = paths[i][j + 1];
+                continue;
+            }
+
+            for (int j = 0; j < pathsThatEndOnWaypointID[i].Count - 1; ++j)
+            {
+                Waypoint way1 = pathsThatEndOnWaypointID[i][j];
+                Waypoint way2 = pathsThatEndOnWaypointID[i][j + 1];
                 float distance = Vector2.Distance(way1.transform.position, way2.transform.position);
 
                 pathsDistance[i] += distance;
             }
         }
 
-        List<Waypoint> nearestPath = pathsThatEndOnWaypointID[pathsDistance.Aggregate((x,y) => x.Value < y.Value ? x : y).Key];
-    
+        List<Waypoint> nearestPath = pathsThatEndOnWaypointID.Count > 0 ? pathsThatEndOnWaypointID[0] : new();
+        if (pathsDistance.Count > 0)
+        {
+            nearestPath = pathsThatEndOnWaypointID[pathsDistance.Aggregate((x,y) => x.Value < y.Value ? x : y).Key];
+            if (actionName != "")
+            {
+                foreach (var action in nearestPath.Last().GetComponentsInChildren<ActionWaypoint>())
+                { 
+                    if (action.Action.ActionName == actionName)
+                    {
+                        Waypoint newWay = action.GetComponent<Waypoint>();
+                        nearestPath.Add(newWay);
+                        break;
+                    }
+                }
+            
+            }
+        }
         return nearestPath.ToArray();
     }
 
@@ -75,7 +97,7 @@ public class Waypoints : MonoBehaviour
     }
 
 
-    private void DisplayPath(List<Waypoint> path, string text = "")
+    public void DisplayPath(List<Waypoint> path, string text = "")
     {
         string d = "";
         foreach (var p in path)
@@ -92,10 +114,13 @@ public class Waypoints : MonoBehaviour
         Waypoint nearestPoint = _waypoints[0];
         foreach (var waypoint in _waypoints)
         {
-            float nearestDistance = Vector2.Distance(pos, nearestPoint.transform.position);
-            float currentDistance = Vector2.Distance(pos, waypoint.transform.position);
-            if (currentDistance < nearestDistance)
-                nearestPoint = waypoint;
+            if (!waypoint.IsDisable)
+            {
+                float nearestDistance = Vector2.Distance(pos, nearestPoint.transform.position);
+                float currentDistance = Vector2.Distance(pos, waypoint.transform.position);
+                if (currentDistance < nearestDistance)
+                    nearestPoint = waypoint;
+            }
         }
 
         return nearestPoint;

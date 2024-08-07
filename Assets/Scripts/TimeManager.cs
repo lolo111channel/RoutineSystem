@@ -6,11 +6,11 @@ using UnityEngine.EventSystems;
 
 public class TimeManager : MonoBehaviour
 {
-    public int Hours { get; private set; } = 0;
+    public int Hours { get; private set; } = 10;
     public int Minutes { get; private set; } = 0;
 
     private float _timer = 0.0f;
-    private float _delay = 0.5f;
+    private float _delay = 0.2f;
 
     public delegate void TimeChangeEventHandler(int hours, int minutes);
     public event TimeChangeEventHandler OnTimeChange;
