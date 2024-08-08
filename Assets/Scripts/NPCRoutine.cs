@@ -8,8 +8,8 @@ public class NPCRoutine : MonoBehaviour
     [SerializeField] private TimeManager _timeManager;
     [SerializeField] private List<Routine> _routines = new();
     private NpcMove _npcMove;
-    private Routine _previouseRoutine = new(); 
-    private Routine _currentRoutine = new();
+    [SerializeField] private Routine _previouseRoutine = new(); 
+    [SerializeField] private Routine _currentRoutine = new();
 
     private void OnEnable()
     {
@@ -49,7 +49,6 @@ public class NPCRoutine : MonoBehaviour
 
             if (_currentRoutine != _previouseRoutine)
             {
-                Debug.Log("test");
                 _npcMove.SetPath(_currentRoutine.WaypointID.name, _currentRoutine.ActionName);
                 _previouseRoutine = _currentRoutine;
             }

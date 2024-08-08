@@ -8,7 +8,7 @@ public class Waypoints : MonoBehaviour
 {
     private Waypoint[] _waypoints = new Waypoint[0];
 
-    public Waypoint[] FindPath(Vector2 start, string waypointID, string actionName = "")
+    public List<Waypoint> FindPath(Vector2 start, string waypointID)
     {
 
         if (_waypoints.Length <= 0)
@@ -42,21 +42,13 @@ public class Waypoints : MonoBehaviour
         if (pathsDistance.Count > 0)
         {
             nearestPath = pathsThatEndOnWaypointID[pathsDistance.Aggregate((x,y) => x.Value < y.Value ? x : y).Key];
-            if (actionName != "")
-            {
-                foreach (var action in nearestPath.Last().GetComponentsInChildren<ActionWaypoint>())
-                { 
-                    if (action.Action.ActionName == actionName)
-                    {
-                        Waypoint newWay = action.GetComponent<Waypoint>();
-                        nearestPath.Add(newWay);
-                        break;
-                    }
-                }
-            
-            }
         }
-        return nearestPath.ToArray();
+        else
+        {
+            nearestPath.Add(nearestWaypoint);
+        }
+
+        return nearestPath;
     }
 
     private List<List<Waypoint>> CreatePaths(Waypoint startWaypoint, string waypointID, Waypoint previouseWay = null, List<Waypoint> previousPath = null)
